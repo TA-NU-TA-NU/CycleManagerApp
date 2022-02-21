@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tanutanu.cyclemgr.domain.repository.TaskMapper">
+
+	<resultMap id="taskResultMap" type="com.tanutanu.cyclemgr.domain.model.Task">
+        <id property="task_id" column="task_id" />
+        <result property="task_name" column="task_name" />
+        <result property="task_desc" column="task_desc" />
+        <result property="user_id" column="user_id" />
+        <result property="use_count" column="use_count" />
+        <result property="last_update" column="last_update" /> 
+    </resultMap>
+
+    <select id="findAllTasksByUserId" parameterType="String" resultMap="taskResultMap">
+		SELECT
+			*
+		FROM 
+			task
+		WHERE
+			task.user_id = #{userId}
+    </select>
+
+	<select id="findTaskById" parameterType="String" resultMap="taskResultMap">
+		SELECT
+			*
+		FROM 
+			task
+		WHERE
+			task.task_id = #{taskId}
+    </select>	
+</mapper>
