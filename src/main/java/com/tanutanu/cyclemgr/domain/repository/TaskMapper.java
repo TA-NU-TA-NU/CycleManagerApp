@@ -21,4 +21,13 @@ public interface TaskMapper {
 
     //一件追加
     int createTask(Task task);
+
+    //taskの更新
+    int updateTask(Task task);
+
+    //カウントアップ
+    int countUpTask(String task_id);
+
+    //削除
+    int deleteTask(String task_id);
 }

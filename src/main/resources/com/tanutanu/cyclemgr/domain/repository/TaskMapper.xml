@@ -45,4 +45,27 @@
 			,#{use_count}
 			,#{last_update})
 	</insert>
+
+	<update id="updateTask"	parameterType="com.tanutanu.cyclemgr.domain.model.Task">
+		UPDATE task
+		SET task_name=#{task_name},
+			task_desc=#{task_desc},
+			last_update=NOW()
+		WHERE
+			task_id=#{task_id}
+	</update>
+
+	<update id="countUpTask" parameterType="String">
+		UPDATE task
+		SET use_count=(use_count+1),
+		    last_update=NOW()
+		WHERE
+			task_id=#{taskId}
+	</update>
+
+	<delete id="deleteTask" parameterType="String">
+		DELETE FROM task
+		WHERE
+			task_id=#{taskId}
+	</delete>
 </mapper>

@@ -90,4 +90,32 @@ public class TaskMapperTest {
         int actual = mapper.createTask(task);
         assertEquals(expected, actual);
     }
+
+    @DisplayName("UPDATE TEST …観点:taskのtask_nameとtask_descのupdateが可能なこと")
+    @Test
+    public void testUpdateTask() {
+        int expected = 1;
+        Task task = new Task();
+        task.setTask_id("T1");
+        task.setTask_name("update test");
+        task.setTask_desc("this is update test");
+        int actual = mapper.updateTask(task);
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("UPDATE TEST …観点:taskのuse_countのupdateが可能なこと")
+    @Test
+    public void testCountUpTask() {
+        int expected = 1;
+        int actual = mapper.countUpTask("T1");
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("DELETE TEST …観点:taskを1件delete可能なこと")
+    @Test
+    public void testDeleteTask() {
+        int expected = 1;
+        int actual = mapper.deleteTask("T1");
+        assertEquals(expected, actual);
+    }
 }
