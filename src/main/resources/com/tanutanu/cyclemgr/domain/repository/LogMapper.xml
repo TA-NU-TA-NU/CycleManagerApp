@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tanutanu.cyclemgr.domain.repository.LogMapper">
+
+	<resultMap id="logResultMap" type="com.tanutanu.cyclemgr.domain.model.Log">
+        <id property="log_id" column="log_id" />
+        <result property="task_id" column="task_id" />
+        <result property="log_decl" column="log_decl" />
+        <result property="log_real" column="log_real" /> 
+    </resultMap>
+
+    <select id="findAllLogsByTaskId" parameterType="String" resultMap="logResultMap">
+        SELECT
+            *
+        FROM
+            log
+        WHERE
+            task_id=#{taskId}
+    </select>
+
+    <select id="getLogDeclAve" parameterType="string" resultType="_double">
+        SELECT
+            AVG(log_decl)
+        FROM
+            log
+        WHERE
+            task_id=#{taskId}
+    </select>
+
+    <select id="getLogRealAve" parameterType="string"  resultType="_double">
+        SELECT
+            AVG(log_real)
+        FROM
+            log
+        WHERE
+            task_id=#{taskId}
+    </select>
+
+</mapper>
