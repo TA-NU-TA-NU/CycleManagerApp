@@ -18,4 +18,7 @@ public interface TaskMapper {
 
     //Task一件取得
     Task findTaskById(String task_id);
+
+    //一件追加
+    int createTask(Task task);
 }

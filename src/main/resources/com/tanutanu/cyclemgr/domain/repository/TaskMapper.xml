@@ -29,5 +29,20 @@
 			task
 		WHERE
 			task.task_id = #{taskId}
-    </select>	
+    </select>
+
+	<insert id="createTask"	parameterType="com.tanutanu.cyclemgr.domain.model.Task">
+		INSERT INTO task (task_id,task_name,task_desc,user_id,use_count,last_update)
+		VALUES(
+			(SELECT 
+				CASE WHEN 'T' ||  MAX(TO_NUMBER(SUBSTRING(task_id,2,255),'999999999'))+1 ISNULL THEN 'T1'
+            		ELSE  'T' ||  MAX(TO_NUMBER(SUBSTRING(task_id,2,255),'999999999'))+1 
+				END
+            FROM task)
+			,#{task_name}
+			,#{task_desc}
+			,#{user_id}
+			,#{use_count}
+			,#{last_update})
+	</insert>
 </mapper>

@@ -44,19 +44,19 @@ public class TaskMapperTest {
     @BeforeEach
     public void setup() throws Exception{
         this.dbcon = new DatabaseConnection(this.ds.getConnection());
-        this.inputCsvDataSet = new CsvDataSet(new File("src/test/resources/com/tanutanu/cyclemgr/domain/repository")); //テスト用CSVおいておくrepo↓
+        this.inputCsvDataSet = new CsvDataSet(new File("src/test/resources/com/tanutanu/cyclemgr/domain/repository")); 
         DatabaseOperation.CLEAN_INSERT.execute(dbcon, inputCsvDataSet);
     }
 
     @AfterEach
     public void teardown()throws Exception {
-        this.dbcon.close(); //後始末
+        this.dbcon.close(); 
     }
 
     @DisplayName("SELECT TEST…観点:useridから全taskを取得できる事.")
     @Test
     public void testSelectAll() {
-        String user_id = "1";
+        String user_id = "U1";
         List<Task> actuals = mapper.findAllTasksByUserId(user_id);
         assertEquals(3, actuals.size());
     }
@@ -64,16 +64,30 @@ public class TaskMapperTest {
     @DisplayName("SELECT TEST…観点:taskidからtaskを取得できる事.")
     @Test
     public void testFindTaskById(){
-        String task_id = "1";
+        String task_id = "T1";
         Task actual = mapper.findTaskById(task_id);
 
-        assertEquals("1", actual.getTask_id());
+        assertEquals("T1", actual.getTask_id());
         assertEquals("test1", actual.getTask_name());
         assertEquals("aaaaa", actual.getTask_desc());
-        assertEquals("1", actual.getUser_id());
+        assertEquals("U1", actual.getUser_id());
         assertEquals(1, actual.getUse_count());
-        assertEquals(Timestamp.valueOf("2021-02-01 03:15:45"), actual.getLast_update());
-        
-        
+        assertEquals(Timestamp.valueOf("2021-02-01 03:15:45"), actual.getLast_update());        
+    }
+
+    @DisplayName("INSERT TEST …観点:task tblに1件insertが可能なこと")
+    @Test
+    public void testCreateTask(){
+        int expected = 1;
+
+        Task task = new Task();
+        task.setTask_name("test");
+        task.setTask_desc("this is test");
+        task.setUser_id("U1");
+        task.setUse_count(1);
+        task.setLast_update( new Timestamp(System.currentTimeMillis()));
+
+        int actual = mapper.createTask(task);
+        assertEquals(expected, actual);
     }
 }
