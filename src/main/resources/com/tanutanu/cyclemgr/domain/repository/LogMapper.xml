@@ -38,4 +38,38 @@
             task_id=#{taskId}
     </select>
 
+    <insert id="createLog" parameterType="com.tanutanu.cyclemgr.domain.model.Log">
+        INSERT INTO log (log_id, task_id, log_decl, log_real)
+        VALUES (
+            (SELECT CASE WHEN 'L' ||  MAX(TO_NUMBER(SUBSTRING(log_id,2,255),'999999999'))+1 ISNULL THEN 'L1'
+                    ELSE  'L' ||  MAX(TO_NUMBER(SUBSTRING(log_id,2,255),'999999999'))+1 END
+                    FROM log),
+            #{task_id},
+            #{log_decl},
+            #{log_real}
+        );
+    </insert>
+
+    <delete id="deleteAllLogsByTaskId" parameterType="string">
+        DELETE FROM log
+		WHERE
+			task_id=#{taskId}
+    </delete>
+
+    <delete id="deleteOverfloatLogsByTaskId" parameterType="string">
+        DELETE FROM 
+            log
+        WHERE
+            task_id=#{taskId}
+            AND
+            log_id NOT IN(
+                SELECT
+                    log_id
+                FROM
+                    log
+                WHERE
+                    task_id=#{taskId}
+                ORDER BY TO_NUMBER(SUBSTRING(log_id,2,255),'999999999') DESC LIMIT 100 OFFSET 0
+            )
+    </delete>
 </mapper>

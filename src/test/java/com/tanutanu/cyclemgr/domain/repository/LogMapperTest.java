@@ -80,4 +80,34 @@ public class LogMapperTest {
         double actual = mapper.getLogRealAve(task_id);
         assertEquals("delta:=0.0000001",Double.valueOf(expected),Double.valueOf(actual),Double.valueOf(delta));
     }
+
+    @DisplayName("INSERT TEST…観点:logを1件追加できる事.")
+    @Test
+    public void testCreateLog() {
+        int expected = 1;
+        Log log = new Log();
+        log.setTask_id("T1");
+        log.setLog_decl(2);
+        log.setLog_real(2);
+        int actual = mapper.createLog(log);
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("DELETE TEST…観点:task_idからlogを全件削除できる事.")
+    @Test
+    public void testDeleteAllLogsByTaskId() {
+        int expected = 3;
+        String task_id="T1";
+        int actual=mapper.deleteAllLogsByTaskId(task_id);
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("DELETE TEST…観点:task_idから100件を超えた分の古いlogを全件削除できる事.")
+    @Test
+    public void testDeleteOverfloatLogsByTaskId() {
+        int expected = 1;
+        String task_id="T2";
+        int actual=mapper.deleteOverfloatLogsByTaskId(task_id);
+        assertEquals(expected, actual);
+    }
 }

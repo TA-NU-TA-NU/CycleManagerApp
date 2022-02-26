@@ -28,6 +28,6 @@ public interface LogMapper {
     //ログ全件削除
     int deleteAllLogsByTaskId(String task_id);
 
-    //最古ログ1件削除
-    int deleteOldLogByTaskId(String task_id);
+    //100件以上の場合に最古ログ1件削除
+    int deleteOverfloatLogsByTaskId(String task_id);
 }
