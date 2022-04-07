@@ -156,7 +156,7 @@ public class TaskControllerTest {
         assertThrows(RuntimeException.class, () -> controller.updateTask(task, error));
     }
 
-    @DisplayName("DeleteTest...観点:異常値に対してエラーを返す事")
+    @DisplayName("DeleteTest...観点:任意のタスク一件が正常に削除できる事")
     @Test
     public void testDeleteTask() {
         String task_id = "T1";
